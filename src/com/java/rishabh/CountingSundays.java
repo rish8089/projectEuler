@@ -2,7 +2,6 @@ package com.java.rishabh;
 
 public class CountingSundays {
 
-    int lim = 7;
     int hash_NonLeapYear[][];
     int hash_LeapYear[][];
     int days_in_month_NonLeapYear[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
