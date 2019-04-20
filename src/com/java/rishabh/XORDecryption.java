@@ -24,12 +24,13 @@ public class XORDecryption {
 
     public int getSumOfASCIIValuesInOriginalText() {
 
-        System.out.println("value = "+(int)('.'));
-        int sum = 0;
+        int ans = 0;
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
                 for (int k = 0; k < 26; k++) {
                     boolean flag = true;
+                    //System.out.println((char)(i+97)+","+(char)(j+97)+","+(char)(k+97));
+                    int sum = 0;
                     for (int l = 0; l < encryptedCodes.size(); l++) {
                         int encryptedCode = encryptedCodes.get(l);
                         int decryptedCode = 0;
@@ -41,11 +42,15 @@ public class XORDecryption {
                             decryptedCode = encryptedCode ^ (k + 97);
                         }
 
+                        sum = sum + decryptedCode;
+
+
+
                         if (!isAsciiCodeValid(decryptedCode)) {
                             flag = false;
-                            System.out.println(
+                            /*System.out.println(
                                 "i = " + i + " j = " + j + " k = " + k + " decryptedCode = "
-                                    + (char)decryptedCode);
+                                    + (char)decryptedCode);*/
                             break;
                         }
                     }
@@ -71,17 +76,19 @@ public class XORDecryption {
 //                    }
 
                     if (flag) {
-                        System.out.println("found the key");
+                        ans = sum;
                     }
                 }
             }
         }
 
-        return sum;
+        System.out.println();
+
+        return ans;
     }
 
     private boolean isAsciiCodeValid(int code) {
-        if ((code >= 32 && code <= 90) || (code >= 97 && code <= 122)) {
+        if ((code >= 32 && code <=90) || (code >= 97 && code <= 122) || code==91 || code==93) {
             return true;
         } else {
             return false;
