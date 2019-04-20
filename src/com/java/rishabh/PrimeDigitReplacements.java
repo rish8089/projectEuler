@@ -32,8 +32,13 @@ public class PrimeDigitReplacements {
             List<String> binaries = getBinaries(digits.size());
             for (String binary : binaries) {
                 int cnt = 0;
+                int  j;
 
-                for (int j = 0; j <= 9; j++) {
+                if(binary.length()==digits.size())
+                    j=0;
+                else
+                    j=1;
+                while(j <= 9)  {
                     //j is replacing digit
                     int s = 0;
                     int k = 0;
@@ -57,9 +62,10 @@ public class PrimeDigitReplacements {
                     }
 
 
-                    if (isPrime(s) && s>=prime) {
+                    if (isPrime(s)) {
                         cnt += 1;
                     }
+                    j++;
 
                     /*if(9-j+1<(8-cnt))
                         break;*/
@@ -67,6 +73,7 @@ public class PrimeDigitReplacements {
 
                 if (cnt == 8) {
                     ans = prime;
+                    System.out.println(binary);
                     break;
                 }
 
