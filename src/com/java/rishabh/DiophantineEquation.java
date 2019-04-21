@@ -55,7 +55,7 @@ public class DiophantineEquation {
     public long getMaximalX()
     {
         long max=0,ans=-1;
-        for(int i=109;i<=109;i++)
+        for(int i=1;i<=1000;i++)
         {
             long y=1;
             long val=isPerfectSquare(i);
@@ -65,7 +65,7 @@ public class DiophantineEquation {
                     val=isPerfectSquare(1 + i * y * y);
                     if(val!=-1)
                     {
-                        System.out.println("i = " +i +",val = " + val);
+                        System.out.println("i = " +i +",val = " + val+",y = "+y);
                         if(max<val) {
                             max = val;
                             ans=i;

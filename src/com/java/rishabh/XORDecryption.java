@@ -25,9 +25,9 @@ public class XORDecryption {
     public int getSumOfASCIIValuesInOriginalText() {
 
         int ans = 0;
-        for (int i = 0; i < 26; i++) {
-            for (int j = 0; j < 26; j++) {
-                for (int k = 0; k < 26; k++) {
+        for (int i = 4; i <5 ; i++) {
+            for (int j = 23; j < 24; j++) {
+                for (int k = 15; k < 16; k++) {
                     boolean flag = true;
                     //System.out.println((char)(i+97)+","+(char)(j+97)+","+(char)(k+97));
                     int sum = 0;
@@ -43,8 +43,7 @@ public class XORDecryption {
                         }
 
                         sum = sum + decryptedCode;
-
-
+                        System.out.print((char)decryptedCode);
 
                         if (!isAsciiCodeValid(decryptedCode)) {
                             flag = false;
