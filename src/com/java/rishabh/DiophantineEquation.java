@@ -18,7 +18,7 @@ public class DiophantineEquation {
         int x;
         BigInteger ans=BigInteger.ZERO;
         int D=-1;
-        for (int i = 1; i <=1000 ; i++) {
+        for (int i = 1; i <=Dlim ; i++) {
             if (!isPerfectSquare(i)) {
                 partials.clear();
                 x = (int) Math.sqrt(i);
