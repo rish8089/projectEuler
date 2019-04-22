@@ -1,94 +1,95 @@
 package com.java.rishabh;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DiophantineEquation {
 
-    /*int lim = 1000;
-    int solution[];
     int Dlim = 1000;
+    List<Integer> partials;
 
     DiophantineEquation() {
-        solution = new int[lim + 1];
+        partials=new ArrayList<>();
     }
 
-    public int getMaximalX() {
-        /*List<Integer> squares = new ArrayList<>();
-        int i = 1, D;
-        while (i < lim) {
-            squares.add(i * i);
-            i++;
-        }
+    public long getMaximalX() {
 
-        for (i = 1; i < squares.size(); i++) {
-            int num = squares.get(i) - 1;//(x^2-1)
-            for (int j = 0; j < squares.size() && squares.get(j)< num; j++) {
-                if (num % squares.get(j) == 0) {
-                    D = num / squares.get(j); //thats great
-                    if (D <= Dlim) {
-                        if (solution[D] == 0) //not set still
-                        {
-                            solution[D] = i + 1; //x=i+1
-                        }
+        int x;
+        BigInteger ans=BigInteger.ZERO;
+        int D=-1;
+        for (int i = 1; i <=1000 ; i++) {
+            if (!isPerfectSquare(i)) {
+                partials.clear();
+                x = (int) Math.sqrt(i);
+                if (x * x - i == 1) {
+                    if (ans.compareTo(BigInteger.valueOf(x))<0) {
+                        System.out.println("i = " +i+",x = "+x);
+                        ans=BigInteger.valueOf(x);
+                        D=i;
                     }
+                    break;
                 }
-            }
-        }
 
-        for(i=2;i<=1000;i++)
-        {
-            if(!isPerfectSquare())
-        }
+                partials.add(x);
+                int p = 0;
+                int q = 1;
 
-        return 0;
-
-    }
-
-    private boolean isPerfectSquare(int num) {
-        int x = (int) Math.sqrt(num);
-        return x * x == num;
-    }*/
-
-    int lim=1000;
-
-    public long getMaximalX()
-    {
-        long max=0,ans=-1;
-        for(int i=1;i<=1000;i++)
-        {
-            long y=1;
-            long val=isPerfectSquare(i);
-            if(val==-1) {
                 while (true) {
+                    p = partials.get(partials.size() - 1) * q - p;
+                    q = (i - p * p) / q;
 
-                    val=isPerfectSquare(1 + i * y * y);
-                    if(val!=-1)
+                    partials.add((int) Math.floor((Math.sqrt(i)+ p) / q));
+
+                    //added one more partial , its time to calculate another fraction.
+                    Fraction ret=recurse(0);
+                    if((ret.a.multiply(ret.a)).subtract(BigInteger.valueOf(i).multiply(ret.b).multiply(ret.b)).equals(BigInteger.ONE))
                     {
-                        System.out.println("i = " +i +",val = " + val+",y = "+y);
-                        if(max<val) {
-                            max = val;
-                            ans=i;
+                        System.out.println("i = " +i+",x = "+ret.a);
+                        if(ans.compareTo(ret.a)<0) {
+                            ans = ret.a;
+                            D=i;
                         }
                         break;
                     }
-
-                    y++;
                 }
+
+
             }
         }
 
-        System.out.println("max = " + max);
-        return ans;
+        return D;
+
     }
 
-    private long isPerfectSquare(long num)
+    private Fraction recurse(int i)
     {
-        long x=(long)Math.sqrt(num);
-        if(x*x==num)
-            return x;
-        else
-            return -1;
+
+        if(i+1==partials.size())
+            return new Fraction(BigInteger.valueOf(partials.get(i)),BigInteger.ONE);
+
+        Fraction ret=recurse(i+1);
+        /*long tempNumerator=ret.a;
+        ret.a=partials.get(i)*ret.a+ret.b;
+        ret.b=tempNumerator;*/
+        return new Fraction(BigInteger.valueOf(partials.get(i)).multiply(ret.a).add(ret.b),ret.a);
+
+    }
+
+    private boolean isPerfectSquare(long num) {
+        int x = (int) Math.sqrt(num);
+        return x * x == num;
+    }
+
+    class Fraction
+    {
+        BigInteger a;
+        BigInteger b;
+
+        public Fraction(BigInteger a, BigInteger b) {
+            this.a = a;
+            this.b = b;
+        }
     }
 
 }

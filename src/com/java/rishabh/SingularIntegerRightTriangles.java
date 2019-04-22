@@ -2,36 +2,49 @@ package com.java.rishabh;
 
 public class SingularIntegerRightTriangles {
 
-    int L=10000;
+    int L = 1500000;
+    int rightAngledTriangles[];
 
-    public int getNoOfSingularIntegerRightTriangles()
-    {
-        int cnt=0;
-        for(int l=12;l<=L;l++)
-        {
-            boolean flag=false;
-            int x=L%3;
-            for(int k=L/3+((x==0)?1:x);k<L/2;k++)
-            {
-                for(int j=L/3;j+k>L/2;j--)
-                {
-                    int i=l-k-j;
-                    if(i*i+j*j==k*k)
-                    {
-                        flag=true;
-                        break;
+    SingularIntegerRightTriangles() {
+        rightAngledTriangles = new int[L + 1];
+    }
+
+    public int getNoOfSingularIntegerRightTriangles() {
+        int mLim = (int) Math.sqrt(L / 2);
+        for (int m = 2; m < mLim; m++) {
+            for (int n = 1; n < m; n++) {
+                if ((m + n) % 2 != 0 && gcd(m, n) == 1) {
+
+                    int a = m * m - n * n;
+                    int b = 2 * m * n;
+                    int c = m * m + n * n;
+
+                    int k = 1;
+                    while (a*k+b*k+c*k<=L) {
+                        rightAngledTriangles[a*k + b*k + c*k]++;
+                        k++;
                     }
+
+
                 }
-
-                if(flag)
-                    break;
             }
-
-            if(flag)
-                cnt+=1;
         }
 
-        return cnt;
+        System.out.println(rightAngledTriangles[120]);
+        int res = 0;
+        for (int i = 1; i <= L; i++) {
+            if (rightAngledTriangles[i] == 1) {
+                res++;
+            }
+        }
+        return res;
+    }
 
+    private int gcd(int m, int n) {
+        if (n == 0) {
+            return m;
+        } else {
+            return gcd(n, m % n);
+        }
     }
 }
